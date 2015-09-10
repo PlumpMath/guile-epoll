@@ -118,14 +118,13 @@ static SCM scm_epoll_create(SCM cloexec_p) {
 }
 
 void scm_epoll_init() {
-  puts("DERP");
   SCM sym;
 #define D(name) { sym = scm_from_utf8_symbol(#name); \
       puts("Define " #name);                         \
       scm_define(sym,scm_from_int(name));            \
     }
   D(EPOLLONESHOT);
-  D(EPOLLWAKEUP); // for autosleep
+  D(EPOLLWAKEUP); // for autosleep, make sure you have the capability!
   D(EPOLL_CLOEXEC);
 
   D(EPOLLIN);
@@ -144,5 +143,4 @@ void scm_epoll_init() {
   scm_c_define_gsubr("epoll-ctl",3,1,0,scm_epoll_ctl);
   scm_c_define_gsubr("epoll-create",0,1,0,scm_epoll_create);
   scm_c_define_gsubr("epoll-cripple",0,1,0,scm_epoll_cripple);
-
 }
